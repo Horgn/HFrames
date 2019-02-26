@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/root/user/index.js"></script>
+
+<input type="hidden" class="HF_RootUserIndexPage" />
+<div class="bjui-pageHeader hf-hide HF_USER_HIDE">
+	<div class="hf-w2p hf-l">
+		<a shiro:hasPermission="sys:user:add" href="r/u/add" class="btn btn-green" data-toggle="dialog" data-width="400" data-height="260" data-id="addUserDialog" data-icon="plus">添加用户</a>
+	</div>
+	<div class="hf-w8p hf-r">
+		<form id="pagerForm" data-toggle="ajaxsearch" action="r/u/" method="post">
+			<input type="hidden" name="pageSize" th:value="${page.pageSize}">
+			<input type="hidden" name="pageCurrent" th:value="${page.pageCurrent}">
+			<input type="hidden" name="orderField" th:value="${page.orderField}">
+			<input type="hidden" name="orderDirection" th:value="${page.orderDirection}">
+			<div class="bjui-searchBar">
+				<label class="hf-ph-label">查询条件:</label>&nbsp;
+				<select name="searchField" data-toggle="selectpicker">
+					<option value="">全部</option>
+					<option value="sUsername" th:selected="${page.searchField} == 'sUsername'">用户名</option>
+					<option value="sNickname" th:selected="${page.searchField} == 'sNickname'">用户昵称</option>
+				</select>&nbsp;
+				<input type="text" th:value="${page.searchValue}" name="searchValue" class="form-control" size="10">&nbsp;
+				<button type="submit" class="btn-default" data-icon="search">查询</button>&nbsp;
+				<a class="btn btn-orange" href="javascript:;" data-toggle="reloadsearch" data-clear-query="true" data-icon="undo">清空查询</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="bjui-pageContent hf-hide HF_USER_HIDE">
+	<div class="hf-w6p hf-h10p hf-l">
+		<fieldset style="height:100%;">
+			<legend>用户列表</legend>
+			<div style="height:94%; overflow:hidden;">
+				<table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true">
+					<thead>
+						<tr>
+							<!-- <th width="26"><input type="checkbox" class="checkboxCtrl" data-group="ids" data-toggle="icheck"></th> -->
+							<th width="40" align="center">序号</th>
+							<th data-order-field="sUsername">用户名</th>
+							<th data-order-field="sNickname">用户昵称</th>
+							<th width="100">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="entity,entityStart:${page.data}">
+								<!-- <td><input type="checkbox" name="sId" data-toggle="icheck" th:value="${entity.sId}"></td> -->
+                <td align="center" th:text="${entityStart.index + 1}"></td>
+                <td th:text="${entity.sUsername}"></td>
+                <td th:text="${entity.sNickname}"></td>
+                <td>
+                    <a shiro:hasPermission="sys:user:role" href="javascript:void(0);" class="btn btn-orange hf-cbtn HF_Search" th:attr="data-user-id=${entity.sId}" data-icon="user" title="角色管理"></a>
+                    <a shiro:hasPermission="sys:user:edit" th:if="${entity.sId != 'admin'}" th:href="@{r/u/edit(sId=${entity.sId})}" class="btn btn-green hf-cbtn" data-toggle="dialog" data-width="400" data-height="150" data-id="dialogEdit" data-icon="edit" title="编辑"></a>
+                    <a shiro:hasPermission="sys:user:delete" th:if="${entity.sId != 'admin'}" th:href="@{r/u/del(sId=${entity.sId})}" class="btn btn-red hf-cbtn" data-toggle="doajax" data-confirm-msg="确定要删除该用户吗？" data-callback="deleteCallBack" data-icon="trash" title="删除"></a>
+                </td>
+            </tr>
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="hf-w4p hf-h10p hf-r">
+		<fieldset style="height:100%;">
+			<legend>用户角色</legend>
+			<div style="height:94%; overflow:hidden;" class="HF_Role_Div">
+
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+<div class="bjui-pageFooter">
+	<div class="pages">
+		<span>每页&nbsp;</span>
+		<div class="selectPagesize">
+			<select data-toggle="selectpicker" data-toggle-change="changepagesize">
+				<option value="30" th:selected="${page.pageSize == 30}">30</option>
+				<option value="60" th:selected="${page.pageSize == 60}">60</option>
+				<option value="120" th:selected="${page.pageSize == 120}">120</option>
+				<option value="150" th:selected="${page.pageSize == 150}">150</option>
+			</select>
+		</div>
+		<span th:text="'&nbsp;条，共 '+${page.rowCount}+' 条'"></span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination" th:attr="data-total=${page.rowCount},data-page-size=${page.pageSize},data-page-current=${page.pageCurrent}">
+	</div>
+</div>

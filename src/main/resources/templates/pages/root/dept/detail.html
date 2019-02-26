@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style media="screen">
+  .hf-sdept-del{position: absolute;right: 7px;top:36px;}
+  .hf-sdept-orla{margin-left: 29px;}
+</style>
+<script src="static/js/root/dept/detail.js"></script>
+
+<input type="hidden" class="HF_RootDeptInfoPage" th:value="${entity.sId}"/>
+<div class="bjui-pageHeader">
+  <div class="bjui-searchBar hf-top-bar">
+    <label class="hf-ph-label">部门名称：</label>
+    <input type="text"  th:value="${entity.sDeptName}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label hf-ml-10px">部门编号：</label>
+    <input type="text"  th:value="${entity.sDeptSign}" class="form-control hf-l" size="10" readonly>&nbsp;
+    <label class="hf-ph-label hf-ml-10px">权限标识：</label>
+    <input type="text" th:value="${entity.sDeptRole}" class="form-control hf-l" size="14" readonly>&nbsp;
+    <label class="hf-ph-label hf-ml-10px">部门等级：</label>
+    <input type="text" th:value="${entity.iDeptLev}" class="form-control hf-l" size="5" readonly>&nbsp;
+    <a th:href="@{r/p/del(sId=${entity.sId})}" class="btn btn-red hf-sdept-del" data-toggle="doajax" data-confirm-msg="确定要删除该部门吗？" data-callback="deleteCallBack" data-icon="trash" title="删除"></a>&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="bjui-searchBar hf-top-bar hf-top-hr">
+    <button th:if="${entity.iDeptLev < 5}" type="button" class="btn-default hf-l HF_MENU_ADD_SON" data-icon="plus" th:attr="data-id=${entity.sId}">添加子部门（分组）</button>&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn-default hf-l HF_MENU_EDIT hf-ml-10px" data-icon="edit" th:attr="data-id=${entity.sId}">修改部门（分组）</button>&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<div class="bjui-pageContent tableContent" style="padding-top:10px;">
+  <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true" th:if="${#lists.size(sonDepts)>0}">
+    <thead>
+      <tr>
+        <th width="40" align="center">序号</th>
+        <th>所属部门</th>
+        <th>部门名称</th>
+        <th>部门编号</th>
+        <th>权限标识</th>
+        <th>部门等级</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="dict,dictStart:${sonDepts}">
+          <td align="center" th:text="${dictStart.index + 1}"></td>
+          <td th:text="${entity.sDeptName}"></td>
+          <td th:text="${dict.sDeptName}"></td>
+          <td th:text="${dict.sDeptSign}"></td>
+          <td th:text="${dict.sDeptRole}"></td>
+          <td th:text="${dict.iDeptLev}"></td>
+          <td th:text="${dict.iOrder}"></td>
+          <td>
+            <a th:href="@{r/p/edit(sId=${dict.sId})}" class="btn btn-green hf-cbtn" data-toggle="dialog" data-width="500" data-height="390" data-id="addDialog" data-icon="edit" title="编辑"></a>
+            <a th:href="@{r/p/del(sId=${dict.sId})}" class="btn btn-red hf-cbtn" data-toggle="doajax" data-confirm-msg="确定要删除该部门（分组）吗？" data-callback="hf_callbackDept_dept" data-icon="trash" title="删除"></a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

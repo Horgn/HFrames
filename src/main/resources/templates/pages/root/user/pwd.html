@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/sha256.js"></script>
+<script src="static/js/root/user/pwd.js"></script>
+
+<input type="hidden" class="HF_RootUserPwdPage" />
+<input type="hidden" class="HF_Securecode" th:value="${securecode}"/>
+<div class="bjui-pageContent">
+  <form action="r/u/pwd" class="pageForm HF_USER_ADD_FORM" data-toggle="validate" data-callback="dialogCallback" data-dialog-id="userPwdDialog">
+		<input type="hidden" name="sId" th:value="${entity.sId}">
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}">
+    <input type="password" class="HF_PWD" name="sPassword" style="display:none">
+    <input type="password" class="HF_NPWD" name="npwd" style="display:none">
+    <input type="password" class="HF_NPWD2" name="npwd2" style="display:none">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr>
+          <td>
+            <label class="control-label x90">用户名：</label>
+            <input type="text" class="HF_USN" name="sUsername" data-rule="required" size="20" th:value="${entity.sUsername}" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">用户昵称：</label>
+            <input type="text" class="HF_NIC" data-rule="required" size="20" th:value="${entity.sNickname}" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">旧密码：</label>
+            <input type="password" class="HF_IN_PWD" data-rule="required" size="20" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">新密码：</label>
+            <input type="password" class="HF_IN_NPWD"  data-rule="required" size="20" placeholder="密码长度（6到20位）">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">确认新密码：</label>
+            <input type="password" class="HF_IN_NPWD2" data-rule="required" size="20" placeholder="密码长度（6到20位）">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">验证码：</label>
+            <input name="checkcode" type="text" class="form-control in HF_CODE" size="10">
+            <img id="captcha_img" alt="点击更换" title="点击更换" style="width:96px;height:22px;" src="code" class="m" onclick="document.getElementById('captcha_img').src='code?'+Math.random();">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="button" class="btn-default HF_SUBMIT_PWD">保存</button></li>
+  </ul>
+</div>

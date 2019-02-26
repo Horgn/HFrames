@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>页面出错</title>
+	<style media="screen">
+		.hf-error-d{color: #aaa;width: 100%;text-align: center;}
+		.hf-error-d h1{font-size: 50px;}
+		.hf-error-d p{font-size: 20px;}
+	</style>
+</head>
+<body>
+  <div class="bjui-pageContent">
+      <div class="hf-error-d">
+        <h1>哎哟，出错咯！</h1>
+        <p th:text="'错误信息：'+${session.error_message}"></p>
+      </div>
+  </div>
+</body>
+</html>

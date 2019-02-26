@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/root/menu/index.js"></script>
+
+<input type="hidden" class="HF_RootMenuIndexPage" />
+<div class="bjui-pageHeader hf-hide HF_MENU_HIDE">
+	<div class="hf-w2p hf-l">
+		<a shiro:hasPermission="sys:menu:add" href="r/m/add" class="btn btn-green" data-toggle="dialog" data-width="400" data-height="300" data-id="addDialog" data-icon="plus">添加主菜单</a>
+	</div>
+</div>
+
+<div class="bjui-pageContent hf-hide HF_MENU_HIDE">
+	<div class="hf-w25p hf-h10p hf-l">
+		<fieldset style="height:100%;">
+			<legend>菜单列表</legend>
+			<div style="height:94%; overflow-y:auto">
+				<ul id="HF_MENU_ZTREE" class="ztree HF_MENU_ZTREE" data-toggle="ztree" data-expand-all="false" data-on-click="hframeSysMenuClickZtree">
+					<!-- 菜单列表 -->
+					<li th:each="menu:${mainMenus}" th:attr="data-id=${menu.sId}" th:text="${menu.sMenuName}" data-pid="0" ></li>
+					<li th:each="menu:${groupMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+					<li th:each="menu:${pageMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+					<li th:each="menu:${elementMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+        </ul>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="hf-w75p hf-h10p hf-r">
+		<fieldset style="height:100%;">
+			<legend>菜单详细</legend>
+			<div style="height:94%; overflow:hidden;" class="HF_MENU_DET">
+
+			</div>
+		</fieldset>
+	</div>
+</div>

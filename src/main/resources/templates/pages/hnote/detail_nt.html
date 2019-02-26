@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="/static/css/hnote/detail.css" rel="stylesheet">
+<script src="static/js/hnote/detail_nt.js"></script>
+
+<input type="hidden" class="HN_NoteDetailPage" th:value="${note.sId}"/>
+<div class="bjui-pageContent tableContent hf-nt-bgc HN_NOTE_DRTAIL">
+  <div class="hf-note-w3">
+    <div class="hf-note-info">
+      作者：<span th:text="${note.creator.sNickname}"></span>
+      访问数：<span th:text="${note.iReadCount}"></span>
+      创建时间：<span th:text="${#dates.format(note.dCreateDate,'yyyy/MM/dd HH:mm')}"></span>
+    </div>
+    <div id="hd-top" class="hf-note-w3s hf-note-content ke-content" th:utext="${note.sNoteContent}">
+
+    </div>
+  </div>
+</div>
+<button type="button" class="btn-orange HF_SA hf-r hf-ml-10px hf-note-sa-btn" data-icon="share" title="分享笔记"></button>
+<button shiro:hasPermission="note:nt:edit" type="button" class="btn-green HF_RD hf-r hf-ml-10px hf-note-edit-btn" data-icon="edit" title="编辑笔记"></button>
+<a shiro:hasPermission="note:nt:delete" th:href="@{hn/nt/del(sId=${note.sId})}" class="btn btn-red hf-r hf-ml-10px hf-note-del-btn" data-toggle="doajax" data-confirm-msg="确定要删除该笔记吗？" data-callback="hf_callbackNote_cg" data-icon="trash" title="删除笔记"></a>
+<a href="#hd-top" class="btn hf-nt-dtop2" data-icon="arrow-up" title="返回顶部"></a>

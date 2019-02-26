@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootDeptAddPage" />
+<div class="bjui-pageContent">
+  <form action="r/p/save" class="pageForm" data-toggle="validate" data-callback="hf_callbackDept_dept" data-dialog-id="addDialog">
+    <input type="text" style="display:none">
+    <input type="password" style="display:none">
+    <input th:if="${entity == null}" type="hidden" name="iDeptLev" value="0">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr th:if="${entity != null}">
+          <td>
+            <label class="control-label x90">所属部门：</label>
+            <input type="hidden" name="iDeptLev" th:value="${entity.iDeptLev + 1}">
+            <input type="hidden" name="sParentId" th:value="${entity.sId}">
+            <input type="text" th:value="${entity.sDeptName}" size="30" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门名称：</label>
+            <input type="text" name="sDeptName" data-rule="required" size="30" placeholder="部门名称唯一">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门编号：</label>
+            <input type="text" name="sDeptSign" data-rule="required" size="30" placeholder="部门编号唯一">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门权限标识：</label>
+            <input type="text" name="sDeptRole" data-rule="required" size="30" placeholder="权限标识唯一">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" size="30">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门说明：</label>
+            <textarea name="sDeptExplain" rows="6" cols="30"></textarea>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

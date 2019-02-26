@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${note.sNoteTitle}"></title>
+  <link href="/static/BJUI/plugins/kindeditor_4.1.10/themes/default/default.css" rel="stylesheet">
+  <link href="/static/BJUI/themes/css/FA/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/BJUI/plugins/kindeditor_4.1.10/themes/simple/simple.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="/static/js/syntaxhighlighter-2.1.382/styles/shCore.css" />
+	<link type="text/css" rel="stylesheet" href="/static/js/syntaxhighlighter-2.1.382/styles/shThemeEclipse.css" />
+  <link href="/static/css/hnote/share.css" rel="stylesheet">
+  <link href="/static/css/hnote/ke-editor.css" rel="stylesheet">
+  <script src="/static/BJUI/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/static/js/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
+  <script type="text/javascript">
+  	$(function(){
+      SyntaxHighlighter.defaults['toolbar'] = false;
+      SyntaxHighlighter.all();
+    })
+  </script>
+</head>
+<body style="height: 100%;">
+  <div class="bjui-pageContent tableContent hf-nt-bgc HN_NOTE_DRTAIL">
+    <div class="hf-note-w2">
+      <div class="hf-note-tit" th:text="${note.sNoteTitle}"></div>
+      <div class="hf-note-info">
+        作者：<span th:text="${note.creator.sNickname}"></span>
+        访问数：<span th:text="${note.iReadCount}"></span>
+        创建时间：<span th:text="${#dates.format(note.dCreateDate,'yyyy/MM/dd HH:mm')}"></span>
+      </div>
+      <div id="hd-top" class="hf-note-w2 hf-note-content ke-content HF_HN" th:utext="${note.sNoteContent}">
+
+      </div>
+    </div>
+  </div>
+  <a href="#hd-top" class="btn hf-nt-dtop2" title="返回顶部"> <i class="fa fa-arrow-up"></i> </a>
+</body>
+</html>

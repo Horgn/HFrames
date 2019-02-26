@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- kindeditor -->
+<link href="static/BJUI/plugins/kindeditor_4.1.10/themes/default/default.css" rel="stylesheet">
+<link href="static/BJUI/plugins/kindeditor_4.1.10/themes/simple/simple.css" rel="stylesheet">
+<link href="static/css/hnote/index.css" rel="stylesheet">
+<link href="static/css/hnote/ke-editor.css" rel="stylesheet">
+<!-- code line hight -->
+<link type="text/css" rel="stylesheet" href="static/js/syntaxhighlighter-2.1.382/styles/shCore.css" />
+<link type="text/css" rel="stylesheet" href="static/js/syntaxhighlighter-2.1.382/styles/shThemeEclipse.css" />
+
+<script type="text/javascript" src="static/js/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
+<script src="static/BJUI/plugins/kindeditor_4.1.10/kindeditor-min.js"></script>
+<script src="static/BJUI/plugins/kindeditor_4.1.10/lang/zh_CN.js"></script>
+<script src="static/js/hnote/index.js"></script>
+
+
+<input type="hidden" class="HN_HNoteIndexPage" />
+<input type="hidden" class="HN_HCategoryId" />
+<input type="hidden" class="HN_DETAIL_N" />
+<div class="bjui-pageHeader hf-hide HN_NOTE_INDEX">
+	<div class="hf-w10p hf-l">
+		<a shiro:hasPermission="note:cg:add" href="hn/cg/add" class="btn btn-green" data-toggle="dialog" data-width="400" data-height="200" data-id="addDialog" data-icon="plus">添加笔记分类</a>
+		<a shiro:hasPermission="note:nt:add" href="javascript:void(0);" class="btn btn-orange hf-nt-add-btn HF_NOTE_ADD hf-hide" data-icon="plus">添加笔记</a>
+		<a shiro:hasPermission="note:cg:delete" href="javascript:void(0);" class="btn btn-red HF_Cate_Del hf-hide hf-r hf-ml-10px" data-icon="trash" title="删除分类"></a>
+		<a shiro:hasPermission="note:cg:edit" href="javascript:void(0);" class="btn btn-green HF_Cate_Edit hf-hide hf-r">编辑分类</a>
+	</div>
+</div>
+
+<div class="bjui-pageContent hf-hide hf-nt-bc HN_NOTE_INDEX">
+	<div class="hf-nt-list hf-h10p hf-l">
+		<fieldset >
+			<legend>笔记列表</legend>
+			<div style="height:100%; " class="hf-cate-mw">
+				<ul id="HN_CATE_ZTREE" class="ztree HF_MENU_ZTREE" data-toggle="ztree" data-expand-all="false" data-on-click="hframeNoteIndexClickZtree">
+					<!--  -->
+					<li class="HF_Cg_menu" th:each="category:${pCategorys}" th:attr="data-id=${category.sId},data-cate=true" th:text="${category.sCategoryName}" data-pid="0" ></li>
+					<li class="HF_Cg_menu" th:each="category:${sCategorys}" th:attr="data-id=${category.sId},data-pid=${category.sParentId},data-cate=true" th:text="${category.sCategoryName}"></li>
+					<li class="HF_Cg_menu" th:each="note:${sNotes}" th:attr="data-id=${note.sId},data-pid=${note.sCategoryId},data-cate=false" th:text="${note.sNoteTitle}" data-faicon="file-text"></li>
+        </ul>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="hf-nt-cont hf-h10p hf-l">
+		<fieldset style="height:100%;">
+			<legend class="HF_N_T">小锤笔记</legend>
+			<div style="height:100%; overflow:hidden;" class="">
+				<div class="hf-nt-con HF_NOTE_DIV hf-hide"></div>
+				<div class="HF_NOTE_DRTAL hf-hide" style="height:100%"></div>
+			</div>
+		</fieldset>
+	</div>
+</div>

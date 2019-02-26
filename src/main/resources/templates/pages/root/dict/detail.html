@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style media="screen">
+  .hf-sdict-del{position: absolute;right: 7px;}
+</style>
+<script src="static/js/root/dict/detail.js"></script>
+
+<input type="hidden" class="HF_RootDictInfoPage" th:value="${entity.sId}"/>
+<div class="bjui-pageHeader">
+  <div class="bjui-searchBar hf-top-bar">
+    <label class="hf-ph-label">字典名称：</label>
+    <input type="text"  th:value="${entity.sDictName}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label">字典值：</label>
+    <input type="text" th:value="${entity.sDictValue}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label">字典类型：</label>
+    <input type="text" th:each="pv:${byPValues}" th:if="${#strings.toString(entity.iDictType) == pv.sDictValue}" th:value="${pv.sDictName}" class="form-control hf-l" size="7" readonly>&nbsp;
+    <label class="hf-ph-label">字典等级：</label>
+    <input type="text" th:value="${entity.iDictLevel}" class="form-control hf-l" size="4" readonly>&nbsp;
+    <label class="hf-ph-label">排序：</label>
+    <input type="text" th:value="${entity.iOrder}" class="form-control hf-l" size="4" readonly>&nbsp;
+    <a shiro:hasPermission="sys:dict:delete" th:if="${(entity.iDictType==2) || ((session.currentUser.sId == 'admin') && (entity.iDictType == 1))}" th:href="@{r/d/del(sId=${entity.sId})}" class="btn btn-red hf-sdict-del" data-toggle="doajax" data-confirm-msg="确定要删除该字典吗？" data-callback="deleteCallBack" data-icon="trash" title="删除"></a>&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="bjui-searchBar hf-top-bar hf-top-hr">
+    <button shiro:hasPermission="sys:dict:add" th:if="${entity.iDictLevel != 3}" type="button" class="btn-default hf-l HF_DICT_ADD_SON" data-icon="plus" th:attr="data-id=${entity.sId}">添加子字典</button>&nbsp;&nbsp;&nbsp;
+    <button shiro:hasPermission="sys:dict:edit" th:if="${(entity.iDictType==2) || ((session.currentUser.sId == 'admin') && (entity.iDictType == 1))}" type="button" class="btn-default hf-l HF_DICT_EDIT hf-ml-10px" data-icon="edit" th:attr="data-id=${entity.sId}">修改字典</button>&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<div class="bjui-pageContent tableContent" style="padding-top:3px;">
+  <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true" th:if="${#lists.size(sonDataDicts)>0}">
+    <thead>
+      <tr>
+        <th width="40" align="center">序号</th>
+        <th>所属字典</th>
+        <th>所属组</th>
+        <th>字典名称</th>
+        <th>字典值</th>
+        <th>字典类型</th>
+        <th>字典等级</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="dict,dictStart:${sonDataDicts}">
+          <td align="center" th:text="${dictStart.index + 1}"></td>
+          <td th:text="${entity.sDictName}"></td>
+          <td th:text="${entity.sDictValue}"></td>
+          <td th:text="${dict.sDictName}"></td>
+          <td th:text="${dict.sDictValue}"></td>
+          <td th:each="pv:${byPValues}" th:if="${#strings.toString(dict.iDictType) == pv.sDictValue}"  th:text="${pv.sDictName}"></td>
+          <td th:text="${dict.iDictLevel}"></td>
+          <td th:text="${dict.iOrder}"></td>
+          <td>
+            <a shiro:hasPermission="sys:dict:edit" th:if="${(dict.iDictType==2) || ((session.currentUser.sId == 'admin') && (dict.iDictType == 1))}" th:href="@{r/d/edit(sId=${dict.sId})}" class="btn btn-green hf-cbtn" data-toggle="dialog" data-width="400" data-height="250" data-id="addDialog" data-icon="edit"></a>
+            <a shiro:hasPermission="sys:dict:delete" th:if="${(dict.iDictType==2) || ((session.currentUser.sId == 'admin') && (dict.iDictType == 1))}" th:href="@{r/d/del(sId=${dict.sId})}" class="btn btn-red hf-cbtn" data-toggle="doajax" data-confirm-msg="确定要删除该字典吗？" data-callback="hf_dialogCallback_dict" data-icon="trash" title="删除"></a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

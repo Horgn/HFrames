@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style media="screen">
+  .hf-smenu-del{position: absolute;right: 7px;top:66px;}
+  .hf-smenu-orla{margin-left: 29px;}
+  .hf-menu-img{position: absolute;left: 442px;top: 42px;}
+</style>
+<script src="static/js/root/menu/detail.js"></script>
+
+<input type="hidden" class="HF_RootMenuInfoPage" th:value="${entity.sId}"/>
+<div class="bjui-pageHeader">
+  <div class="bjui-searchBar hf-top-bar">
+    <label class="hf-ph-label">菜单名称：</label>
+    <input type="text"  th:value="${entity.sMenuName}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label">权限标识：</label>
+    <input type="text" th:value="${entity.sRoleSign}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label">菜单类型：</label>
+    <input type="text" th:each="pv:${pValues}" th:if="${#strings.toString(entity.iMenuType) == pv.sDictValue}" th:value="${pv.sDictName}" class="form-control hf-l" size="10" readonly>&nbsp;
+    <a shiro:hasPermission="sys:menu:delete" th:href="@{r/m/del(sId=${entity.sId})}" class="btn btn-red hf-smenu-del" data-toggle="doajax" data-confirm-msg="确定要删除该菜单吗？" data-callback="deleteCallBack" data-icon="trash" title="删除"></a>&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="bjui-searchBar hf-top-bar">
+    <label class="hf-ph-label">菜单链接：</label>
+    <input type="text" th:value="${entity.sMenuLink}" class="form-control hf-l" size="16" readonly>&nbsp;
+    <label class="hf-ph-label">菜单图标：</label>
+    <input type="text" th:value="${entity.sMenuImg}" class="form-control hf-l" size="16" readonly>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <i th:attr="class='hf-menu-img fa fa-'+(${#strings.isEmpty(entity.sMenuImg)}?'':${entity.sMenuImg})"></i>
+    <label class="hf-ph-label hf-smenu-orla">排序：</label>
+    <input type="text" th:value="${entity.iOrder}" class="form-control hf-l" size="10" readonly>&nbsp;
+  </div>
+  <div class="bjui-searchBar hf-top-bar hf-top-hr">
+    <button shiro:hasPermission="sys:menu:add" th:if="${entity.iMenuType != 3}" type="button" class="btn-default hf-l HF_MENU_ADD_SON" data-icon="plus" th:attr="data-id=${entity.sId}">添加子菜单</button>&nbsp;&nbsp;&nbsp;
+    <button shiro:hasPermission="sys:menu:edit" type="button" class="btn-default hf-l HF_MENU_EDIT hf-ml-10px" data-icon="edit" th:attr="data-id=${entity.sId}">修改菜单</button>&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<div class="bjui-pageContent tableContent" style="padding-top:2px;">
+  <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true" th:if="${#lists.size(sonMenus)>0}">
+    <thead>
+      <tr>
+        <th width="40" align="center">序号</th>
+        <th>所属菜单</th>
+        <th width="35" align="center">图标</th>
+        <th>菜单名称</th>
+        <th>菜单权限</th>
+        <th>菜单链接</th>
+        <th>菜单类型</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="dict,dictStart:${sonMenus}">
+          <td align="center" th:text="${dictStart.index + 1}"></td>
+          <td th:text="${entity.sMenuName}"></td>
+          <td align="center"> <i th:attr="class='fa fa-' + (${dict.sMenuImg}?${dict.sMenuImg}:'user')"></i> </td>
+          <td th:text="${dict.sMenuName}"></td>
+          <td th:text="${dict.sRoleSign}"></td>
+          <td th:text="${dict.sMenuLink}"></td>
+          <td th:each="pv:${pValues}" th:if="${#strings.toString(dict.iMenuType) == pv.sDictValue}"  th:text="${pv.sDictName}"></td>
+          <td th:text="${dict.iOrder}"></td>
+          <td>
+            <a shiro:hasPermission="sys:menu:edit" th:href="@{r/m/edit(sId=${dict.sId})}" class="btn btn-green hf-cbtn" data-toggle="dialog" data-width="400" data-height="270" data-id="addDialog" data-icon="edit"></a>
+            <a shiro:hasPermission="sys:menu:delete" th:href="@{r/m/del(sId=${dict.sId})}" class="btn btn-red hf-cbtn" data-toggle="doajax" data-confirm-msg="确定要删除该菜单吗？" data-callback="hf_dialogCallback_menu" data-icon="trash" title="删除"></a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

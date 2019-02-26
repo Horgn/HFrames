@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootMenuEditPage" />
+<div class="bjui-pageContent">
+  <form action="r/m/save" class="pageForm" data-toggle="validate" data-callback="hf_dialogCallback_menu" data-dialog-id="addDialog">
+    <input type="hidden" name="sId" th:value="${entity.sId}" >
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}" >
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr th:if="${entity.sParentId != null}">
+          <td>
+            <label class="control-label x90">所属菜单：</label>
+            <input type="hidden" name="sParentId" th:value="${entity.parentDTO.sId}">
+            <input type="text" data-rule="required" size="20" th:value="${entity.parentDTO.sMenuName}" disabled>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单名称：</label>
+            <input type="text" name="sMenuName" data-rule="required" size="20" th:value="${entity.sMenuName}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单权限：</label>
+            <input type="text" name="sRoleSign" data-rule="required" size="20" th:value="${entity.sRoleSign}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单链接：</label>
+            <input type="text" name="sMenuLink" size="20" th:value="${entity.sMenuLink}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单图标：</label>
+            <input type="text" name="sMenuImg" size="20" th:value="${entity.sMenuImg}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" size="20" th:value="${entity.iOrder}">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

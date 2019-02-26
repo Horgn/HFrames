@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/sha256.js"></script>
+<script src="static/js/root/user/add.js"></script>
+
+<input type="hidden" class="HF_RootUserAddPage" />
+<input type="hidden" class="HF_Securecode" th:value="${securecode}"/>
+<div class="bjui-pageContent">
+  <form action="r/u/save" class="pageForm HF_USER_ADD_FORM" data-toggle="validate" data-callback="dialogCallback" data-dialog-id="dialogId">
+    <input type="text" style="display:none">
+    <input type="password" style="display:none">
+    <input type="password" class="HF_PWD" name="sPassword" style="display:none">
+    <input type="password" class="HF_PWD2" name="password2" style="display:none">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr>
+          <td>
+            <label class="control-label x90">用户名：</label>
+            <input type="text" class="HF_USN" name="sUsername" data-rule="required" size="20" placeholder="用户名长度（4到15位）">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">用户昵称：</label>
+            <input type="text" class="HF_NIC" name="sNickname" data-rule="required" size="20" placeholder="用户昵称不超过10个字符">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">密码：</label>
+            <input type="password" class="HF_IN_PWD" data-rule="required" size="20" placeholder="密码长度（6到20位）">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">确认密码：</label>
+            <input type="password" class="HF_IN_PWD2" data-rule="required" size="20" placeholder="密码长度（6到20位）">
+          </td>
+        </tr>
+        <!-- <tr>
+          <td>
+            <label class="control-label x90">用户角色：</label>
+            <select name="sRoleId" data-toggle="selectpicker" data-rule="required" size="20" data-width="200">
+                <option th:each="entity:${roleMap}" th:value="${entity.sId}" th:text="${entity.sRoleName}" ></option>
+            </select>
+          </td>
+        </tr> -->
+        <tr>
+          <td>
+            <label class="control-label x90">验证码：</label>
+            <input name="checkcode" type="text" class="form-control in HF_CODE" size="10">
+            <img id="captcha_img" alt="点击更换" title="点击更换" style="width:96px;height:22px;" src="code" class="m" onclick="document.getElementById('captcha_img').src='code?'+Math.random();">
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="button" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

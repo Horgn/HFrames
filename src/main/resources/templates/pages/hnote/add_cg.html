@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HN_CateAddPage" />
+<div class="bjui-pageContent">
+  <form action="hn/cg/save" class="pageForm" data-toggle="validate" data-callback="hf_callbackNote_cg" data-dialog-id="addDialog">
+    <input type="text" style="display:none">
+    <input type="password" style="display:none">
+    <table class="table table-condensed table-hover">
+      <tbody>
+
+        <tr>
+          <td>
+            <label class="control-label x90">所属分类：</label>
+            <select name="sParentId" data-toggle="selectpicker" data-width="200">
+    					<option value=""></option>
+    					<option th:each="category:${categorys}" th:value="${category.sId}" th:text="${category.sCategoryName}"></option>
+    				</select>&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">分类名称：</label>
+            <input type="text" name="sCategoryName" data-rule="required" size="20" >
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" size="20" >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

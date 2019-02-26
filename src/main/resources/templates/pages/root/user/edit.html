@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootUserEditPage" />
+<div class="bjui-pageContent">
+  <form action="r/u/save" class="pageForm" data-toggle="validate" data-callback="dialogCallback" data-dialog-id="dialogEdit">
+    <input type="hidden" name="sId" th:value="${entity.sId}" >
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}" >
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr>
+          <td>
+            <label class="control-label x90">用户名：</label>
+            <input type="text" class="HF_USN" name="sUsername" data-rule="required" size="20" th:value="${entity.sUsername}" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">用户昵称：</label>
+            <input type="text" class="HF_NIC" name="sNickname" data-rule="required" size="20" placeholder="用户昵称不超过10个字符" th:value="${entity.sNickname}">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/root/user/role.js"></script>
+
+<input type="hidden" class="HF_RootUserRolePage" th:value="${entity.sId}"/>
+<div class="bjui-pageHeader hf-hide HF_UROLE_HIDE">
+	<div class="bjui-searchBar">
+		&nbsp;&nbsp;
+		<label class="hf-ph-label">用户名：</label><input type="text"  th:value="${entity.sUsername}" class="form-control hf-l" size="10" readonly>&nbsp;
+		<label class="hf-ph-label">用户昵称：</label><input type="text" th:value="${entity.sNickname}" class="form-control hf-l" size="10" readonly>&nbsp;
+		<button shiro:hasPermission="sys:user:role" type="button" class="btn-default hf-r HF_SaveRole_btn" data-icon="save">保存</button>&nbsp;&nbsp;&nbsp;
+	</div>
+</div>
+
+<div class="bjui-pageContent tableContent hf-hide HF_UROLE_HIDE">
+			<div style="height:94%; overflow:hidden;">
+				<table class="table " data-selected-multi="true">
+					<thead>
+						<tr>
+							<th width="26"><input type="checkbox" class="checkboxCtrl" data-group="HF_Role_Check_Id" data-toggle="icheck"></th>
+							<th width="40" align="center">序号</th>
+							<th>角色名称</th>
+							<th>角色标识</th>
+							<th>角色等级</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="entity,entityStart:${allRoles}">
+								<td><input type="checkbox" name="HF_Role_Check_Id" data-toggle="icheck" th:value="${entity.sId}" th:checked="${#lists.contains(userRoles, entity.sId)}"></td>
+                <td align="center" th:text="${entityStart.index + 1}"></td>
+                <td th:text="${entity.sRoleName}"></td>
+                <td th:text="${entity.sRoleSign}"></td>
+                <td th:text="${entity.iRoleLev}"></td>
+            </tr>
+					</tbody>
+				</table>
+			</div>
+</div>

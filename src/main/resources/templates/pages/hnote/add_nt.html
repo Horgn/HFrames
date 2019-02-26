@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <link href="static/css/hnote/hnote.css" rel="stylesheet"> -->
+<link href="/static/css/hnote/add-edit.css" rel="stylesheet">
+<script src="static/js/hnote/add_nt.js"></script>
+
+<input type="hidden" class="HN_NoteAddPage" th:value="${category.sId}"/>
+<div class="bjui-pageHeader HN_NOTE_ADD hf-hide">
+  <div class="hf-note-w hf-l">
+    <label class="hf-ph-label">所属分类：</label>
+    <input type="text"  th:value="${category.sCategoryName}" class="form-control hf-l" size="33" readonly>
+    <button type="submit" class="btn-default HF_CN hf-r hf-ml-10px">清空</button>
+    <button type="submit" class="btn-green HF_AN hf-r hf-note-an">保存</button>
+  </div>
+</div>
+
+<div class="bjui-pageContent tableContent HN_NOTE_ADD hf-hide">
+  <div class="hf-top-bar">
+    <div class="hf-l">
+      <label class="hf-ph-label">笔记名称：</label>
+      <input type="text" class="form-control hf-l HF_N_Name" size="33" >
+    </div>
+    <div class="hf-r">
+      <label class="hf-ph-label">笔记标签：</label>
+      <input type="text" class="form-control hf-l HF_N_Tag" size="32.5" >
+    </div>
+  </div>
+  <div class="hf-top-bar hf-bot-hr">
+    <div class="hf-l">
+      <label class="hf-ph-label">可见类型：</label>
+      <select data-toggle="selectpicker" data-width="330" class="HF_N_Type">
+        <option th:each="type:${showTypes}" th:value="${type.sDictValue}" th:selected="${type.sDictValue == '2'}" th:text="${type.sDictName}"></option>
+      </select>&nbsp;
+    </div>
+    <div class="hf-r">
+      <label class="hf-ph-label hf-note-ll">排序：</label>
+      <input type="text" class="form-control hf-l HF_N_Order" size="32.5" >
+    </div>
+  </div>
+  <div class="hf-note-w2 hf-keditor">
+    <textarea data-toggle="kindeditor" id="HF_N_Content" name="HF_N_Content" class="HF_N_Content" rows="30" cols="82"></textarea>
+  </div>
+</div>

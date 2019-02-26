@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/root/dict/index.js"></script>
+
+<input type="hidden" class="HF_RootDictIndexPage" />
+<div class="bjui-pageHeader hf-hide HF_DICT_HIDE">
+	<div class="hf-w2p hf-l">
+		<a shiro:hasPermission="sys:dict:add" href="r/d/add" class="btn btn-green" data-toggle="dialog" data-width="400" data-height="200" data-id="addDialog" data-icon="plus">添加根字典</a>
+	</div>
+</div>
+
+<div class="bjui-pageContent hf-hide HF_DICT_HIDE" >
+	<div class="hf-w25p hf-h10p hf-l">
+		<fieldset style="height:100%;">
+			<legend>字典列表</legend>
+			<div style="height:94%; overflow-y:auto" >
+				<ul id="HF_DICT_ZTREE" class="ztree HF_DICT_ZTREE" data-toggle="ztree" data-expand-all="false" data-on-click="hframeSysDictClickZtree">
+					<!-- 字典表 -->
+					<li th:each="dict:${superDicts}" th:attr="data-id=${dict.sId}" th:text="${dict.sDictName}" data-pid="0" ></li>
+					<li th:each="dict:${sonDicts1}" th:attr="data-id=${dict.sId},data-pid=${dict.sParentId}" th:text="${dict.sDictName}" ></li>
+					<li th:each="dict:${sonDicts2}" th:attr="data-id=${dict.sId},data-pid=${dict.sParentId}" th:text="${dict.sDictName}" ></li>
+					<li th:each="dict:${sonDicts3}" th:attr="data-id=${dict.sId},data-pid=${dict.sParentId}" th:text="${dict.sDictName}" ></li>
+        </ul>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="hf-w75p hf-h10p hf-r">
+		<fieldset style="height:100%;">
+			<legend>字典详细</legend>
+			<div style="height:94%; overflow:hidden;" class="HF_DICT_DET">
+
+			</div>
+		</fieldset>
+	</div>
+</div>

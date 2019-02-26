@@ -1,0 +1,10 @@
+.hf-note-w{width: 830px;}
+.hf-note-w2{width: 820px;margin: 5px auto;padding: 5px 0;}
+.hf-note-content{background-color: #fff;padding: 10px;}
+.hf-nt-bgc{background-color: #eeeeee80;width: 100%;height: 100%}
+.hf-nt-dtop2{width: 50px;height: 50px;border: 1px solid #dfdada;border-radius: 10px;position: fixed;right: 50px;bottom: 50px;padding: 0px;color: #C4C6C4;}
+.hf-nt-dtop2:hover{color: #F2C817;border-color: #F2C817;}
+.hf-nt-dtop2 i{font-size: 35px;width: 40px;height: 40px;margin: 8px;}
+.hf-note-tit{width: 810px;margin: 5px auto;padding: 5px 10px;font-size: 25px;font-weight: bold;background-color: #fff;border-left: 10px solid green;}
+.hf-note-info{font-size: 11px;width: 100%;padding: 0 5px;color: #888;text-align: right;}
+.hf-note-info span{margin-right: 20px;}

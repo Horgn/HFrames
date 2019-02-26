@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootDeptAEditPage" />
+<div class="bjui-pageContent">
+  <form action="r/p/save" class="pageForm" data-toggle="validate" data-callback="hf_callbackDept_dept" data-dialog-id="addDialog">
+    <input type="hidden" name="sId" th:value="${entity.sId}" >
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}" >
+    <input type="hidden" name="iDeptLev" th:value="${entity.iDeptLev}">
+    <input type="hidden" name="sParentId" th:value="${entity.sParentId}">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr th:if="${entity.iDeptLev != 0}">
+          <td>
+            <label class="control-label x90">所属部门：</label>
+            <input type="text" th:value="${entity.parentDept.sDeptName}" size="30" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门名称：</label>
+            <input type="text" name="sDeptName" data-rule="required" size="30" placeholder="部门名称唯一" th:value="${entity.sDeptName}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门编号：</label>
+            <input type="text" name="sDeptSign" data-rule="required" size="30" placeholder="部门编号唯一" th:value="${entity.sDeptSign}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门权限标识：</label>
+            <input type="text" name="sDeptRole" data-rule="required" size="30" placeholder="权限标识唯一" th:value="${entity.sDeptRole}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" size="30" th:value="${entity.iOrder}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">部门说明：</label>
+            <textarea name="sDeptExplain" rows="6" cols="30" th:text="${entity.sDeptExplain}"></textarea>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

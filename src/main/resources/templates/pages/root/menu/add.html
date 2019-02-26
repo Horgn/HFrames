@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootMenuAddPage" />
+<div class="bjui-pageContent">
+  <form action="r/m/save" class="pageForm" data-toggle="validate" data-callback="hf_dialogCallback_menu" data-dialog-id="addDialog">
+    <input type="text" style="display:none">
+    <input type="password" style="display:none">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr th:if="${parent != null}">
+          <td>
+            <label class="control-label x90">所属菜单：</label>
+            <input type="hidden" name="sParentId" th:value="${parent.sId}">
+            <input type="text" data-rule="required" size="20" th:value="${parent.sMenuName}" disabled>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单名称：</label>
+            <input type="text" name="sMenuName" data-rule="required" size="20" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单权限：</label>
+            <input type="text" name="sRoleSign" data-rule="required" size="20" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单链接：</label>
+            <input type="text" name="sMenuLink" size="20" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">菜单图标：</label>
+            <input type="text" name="sMenuImg" size="20" >
+          </td>
+        </tr>
+
+        <tr th:if="${parent == null}">
+          <td>
+            <label class="control-label x90">菜单类型：</label>
+            <input type="hidden" name="iMenuType" value="0">
+            <input type="text" data-rule="required" size="20" value="主菜单" disabled>
+          </td>
+        </tr>
+        <tr th:if="${(parent != null) && (parent.iMenuType == 0)}">
+          <td>
+            <label class="control-label x90">菜单类型：</label>
+            <input type="hidden" name="iMenuType" value="1">
+            <input th:each="pv:${pValues}" th:if="${pv.sDictValue == '1'}" type="text" data-rule="required" size="20" th:value="${pv.sDictName}" disabled>
+          </td>
+        </tr>
+        <tr th:if="${(parent != null) && (parent.iMenuType == 1)}">
+          <td>
+            <label class="control-label x90">菜单类型：</label>
+            <input type="hidden" name="iMenuType" value="2">
+            <input th:each="pv:${pValues}" th:if="${pv.sDictValue == '2'}" type="text" data-rule="required" size="20" th:value="${pv.sDictName}" disabled>
+          </td>
+        </tr>
+        <tr th:if="${(parent != null) && (parent.iMenuType == 2)}">
+          <td>
+            <label class="control-label x90">菜单类型：</label>
+            <input type="hidden" name="iMenuType" value="3">
+            <input th:each="pv:${pValues}" th:if="${pv.sDictValue == '3'}" type="text" data-rule="required" size="20" th:value="${pv.sDictName}" disabled>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" size="20" >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

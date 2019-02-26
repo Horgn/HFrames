@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<input type="hidden" class="HF_RootDefaultPage">
+<div class="bjui-pageHeader hf-hide">
+	<form id="pagerForm" data-toggle="ajaxsearch" action="default" method="post">
+		<input type="hidden" name="pageSize" th:value="${page.pageSize}">
+		<input type="hidden" name="pageCurrent" th:value="${page.pageCurrent}">
+		<input type="hidden" name="orderField" th:value="${page.orderField}">
+		<input type="hidden" name="orderDirection" th:value="${page.orderDirection}">
+		<div class="bjui-searchBar">
+			<label>所属业务:</label>
+			<select name="type" data-toggle="selectpicker">
+				<option value="">全部</option>
+				<option value="1">联络</option>
+				<option value="2">住宿</option>
+				<option value="3">餐饮</option>
+				<option value="4">交通</option>
+			</select>&nbsp;
+			<label>护照号：</label><input type="text" id="customNo" value="" name="code" class="form-control" size="10">&nbsp;
+			<label>客户姓名：</label><input type="text" value="" name="name" class="form-control" size="8">&nbsp;
+			<input type="checkbox" id="j_table_chk" value="true" data-toggle="icheck" data-label="我的客户">
+			<button type="button" class="showMoreSearch" data-toggle="moresearch" data-name="custom"><i class="fa fa-angle-double-down"></i></button>
+			<button type="submit" class="btn-default" data-icon="search">查询</button>&nbsp;
+			<a class="btn btn-orange" href="javascript:;" data-toggle="reloadsearch" data-clear-query="true" data-icon="undo">清空查询</a>
+			<div class="pull-right">
+				<button type="button" class="btn-blue" data-url="ajaxDone2.html?id={#bjui-selected}" data-toggle="doajax" data-confirm-msg="确定要删除选中项吗？" data-icon="remove" title="可以在控制台(network)查看被删除ID">删除选中行</button>&nbsp;
+				<div class="btn-group">
+					<button type="button" class="btn-default dropdown-toggle" data-toggle="dropdown" data-icon="copy">复选框-批量操作<span class="caret"></span></button>
+					<ul class="dropdown-menu right" role="menu">
+						<li><a href="book1.xlsx" data-toggle="doexport" data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
+						<li><a href="book1.xlsx" data-toggle="doexportchecked" data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span style="color: red;">选中</span></a></li>
+						<li class="divider"></li>
+						<li><a href="ajaxDone2.html" data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？" data-idname="delids" data-group="ids">删除选中</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="bjui-moreSearch">
+			<label>职业：</label><input type="text" value="" name="profession" size="15" />
+			<label>&nbsp;性别:</label>
+			<select name="sex" data-toggle="selectpicker">
+				<option value="">全部</option>
+				<option value="true">男</option>
+				<option value="false">女</option>
+			</select>
+			<label>&nbsp;手机:</label>
+			<input type="text" value="" name="mobile" size="10">
+		</div>
+	</form>
+</div>
+
+<div class="bjui-pageContent">
+
+	<h1 class="hf-c">HFrames 框架</h1>
+	<h5 class="hf-c">Horgn@v1.0.0</h5>
+
+	<table class="table table-bordered table-hover table-striped table-top hf-hide" data-selected-multi="true">
+		<thead>
+			<tr>
+				<th width="26"><input type="checkbox" class="checkboxCtrl" data-group="ids" data-toggle="icheck"></th>
+				<th align="center">序号</th>
+				<th data-order-field="name">姓名</th>
+				<th data-order-direction="asc" data-order-field="createtime">登记时间</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-id="65">
+					<td><input type="checkbox" name="ids" data-toggle="icheck" value="65"></td>
+					<td align="center">1</td>
+					<td>罗汉60</td>
+					<td>罗汉60</td>
+					<td>
+							<a href="form.html?id=65" class="btn btn-green" data-toggle="navtab" data-id="form" data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？">编辑</a>
+							<a href="ajaxDone2.html" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删</a>
+					</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+
+<div class="bjui-pageFooter hf-hide">
+    <div class="pages">
+        <span>每页&nbsp;</span>
+        <div class="selectPagesize">
+					<select data-toggle="selectpicker" data-toggle-change="changepagesize">
+						<option value="30" th:selected="${page.pageSize == 30}">30</option>
+						<option value="60" th:selected="${page.pageSize == 60}">60</option>
+						<option value="120" th:selected="${page.pageSize == 120}">120</option>
+						<option value="150" th:selected="${page.pageSize == 150}">150</option>
+					</select>
+        </div>
+        <span th:text="'&nbsp;条，共 '+${page.rowCount}+' 条'"></span>
+    </div>
+    <div class="pagination-box" data-toggle="pagination" th:attr="data-total=${page.rowCount},data-page-size=${page.pageSize},data-page-current=${page.pageCurrent}">
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootRoleEditPage" />
+<div class="bjui-pageContent">
+  <form action="r/r/save" class="pageForm" data-toggle="validate" data-callback="dialogCallback" data-dialog-id="dialogEdit">
+    <input type="hidden" name="sId" th:value="${entity.sId}" >
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}" >
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr>
+          <td>
+            <label class="control-label x90">角色名称：</label>
+            <input type="text" name="sRoleName" data-rule="required" size="20" placeholder="角色名称唯一" th:value="${entity.sRoleName}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">角色标识：</label>
+            <input type="text" name="sRoleSign" data-rule="required" size="20" placeholder="角色标识唯一" th:value="${entity.sRoleSign}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">角色等级：</label>
+            <input type="text" name="iRoleLev" data-rule="required" size="20" placeholder="（1-99）" th:value="${entity.iRoleLev}">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>

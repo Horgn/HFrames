@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="static/js/root/role/index.js"></script>
+
+<input type="hidden" class="HF_RootRoleIndexPage" />
+<div class="bjui-pageHeader hf-hide HF_ROLE_HIDE">
+	<div class="hf-w2p hf-l">
+		<a shiro:hasPermission="sys:role:add" href="r/r/add" class="btn btn-green" data-toggle="dialog" data-width="400" data-height="260" data-id="addDialog" data-icon="plus">添加角色</a>
+	</div>
+	<div class="hf-w8p hf-r">
+		<form id="pagerForm" data-toggle="ajaxsearch" action="r/r/" method="post">
+			<input type="hidden" name="pageSize" th:value="${page.pageSize}">
+			<input type="hidden" name="pageCurrent" th:value="${page.pageCurrent}">
+			<input type="hidden" name="orderField" value="iRoleLev">
+			<input type="hidden" name="orderDirection" value="desc">
+		</form>
+	</div>
+</div>
+
+<div class="bjui-pageContent hf-hide HF_ROLE_HIDE">
+	<div class="hf-w6p hf-h10p hf-l">
+		<fieldset style="height:100%;">
+			<legend>角色列表</legend>
+			<div style="height:94%; overflow:hidden;">
+				<table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true">
+					<thead>
+						<tr>
+							<th width="40" align="center">序号</th>
+							<th data-order-field="sRoleName">角色名称</th>
+							<th data-order-field="sRoleSign">角色标识</th>
+							<th data-order-field="iRoleLev">角色等级</th>
+							<th width="100">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="entity,entityStart:${page.data}">
+                <td align="center" th:text="${entityStart.index + 1}"></td>
+                <td th:text="${entity.sRoleName}"></td>
+                <td th:text="${entity.sRoleSign}"></td>
+                <td th:text="${entity.iRoleLev}"></td>
+                <td>
+										<a shiro:hasPermission="sys:role:permi" href="javascript:void(0);" class="btn btn-orange hf-cbtn HF_Role_Per" th:attr="data-role-id=${entity.sId}" data-icon="delicious" title="权限管理"></a>
+                    <a shiro:hasPermission="sys:role:edit" th:if="${entity.sId != 'admin'}" th:href="@{r/r/edit(sId=${entity.sId})}" class="btn btn-green hf-cbtn" data-toggle="dialog" data-width="400" data-height="180" data-id="dialogEdit" data-icon="edit" title="编辑"></a>
+                    <a shiro:hasPermission="sys:role:delete" th:if="${entity.sId != 'admin'}" th:href="@{r/r/del(sId=${entity.sId})}" class="btn btn-red hf-cbtn" data-toggle="doajax" data-confirm-msg="确定要删除该角色吗？" data-callback="deleteCallBack" data-icon="trash" title="删除"></a>
+                </td>
+            </tr>
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="hf-w4p hf-h10p hf-r">
+		<fieldset style="height:100%;">
+			<legend>权限列表</legend>
+			<div style="height:100%; overflow:auto;" class="HF_ROLR_PERMI_DIV hf-hide">
+        <div class="">
+          <div class="bjui-searchBar">
+        		&nbsp;&nbsp;
+        		<label class="hf-ph-label">角色名称：</label><input type="text" class="form-control hf-l HF_ENRIRY_NAME" size="10" readonly>&nbsp;
+        		<label class="hf-ph-label">角色标识：</label><input type="text" class="form-control hf-l HF_ENRIRY_SIGN" size="10" readonly>&nbsp;
+        		<button shiro:hasPermission="sys:role:permi" type="button" class="btn-default hf-l HF_SavePermi_btn hf-ml-5px" data-icon="save">保存</button>&nbsp;&nbsp;&nbsp;
+        	</div>
+        </div>
+        <div class="hf-w4p hf-l" style="overflow-y:auto">
+          <div style="height:100%; overflow-y:auto" >
+            <ul id="HF_PERMISSION_ZTREE" class="ztree HF_PERMISSION_ZTREE" data-check-enable="true" data-on-check="hframeRoleClickZtree" data-toggle="ztree" data-expand-all="true" data-on-click="do_show_permi">
+              <!-- 权限表 -->
+              <li th:each="menu:${mainMenus}" th:attr="data-id=${menu.sId}" th:text="${menu.sMenuName}" data-pid="0" ></li>
+              <li th:each="menu:${groupMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+              <li th:each="menu:${pageMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+              <li th:each="menu:${elementMenus}" th:attr="data-id=${menu.sId},data-pid=${menu.sParentId}" th:text="${menu.sMenuName}" ></li>
+            </ul>
+          </div>
+        </div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+<div class="bjui-pageFooter">
+	<div class="pages">
+		<span>每页&nbsp;</span>
+		<div class="selectPagesize">
+			<select data-toggle="selectpicker" data-toggle-change="changepagesize">
+				<option value="30" th:selected="${page.pageSize == 30}">30</option>
+				<option value="60" th:selected="${page.pageSize == 60}">60</option>
+				<option value="120" th:selected="${page.pageSize == 120}">120</option>
+				<option value="150" th:selected="${page.pageSize == 150}">150</option>
+			</select>
+		</div>
+		<span th:text="'&nbsp;条，共 '+${page.rowCount}+' 条'"></span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination" th:attr="data-total=${page.rowCount},data-page-size=${page.pageSize},data-page-current=${page.pageCurrent}">
+	</div>
+</div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<input type="hidden" class="HF_RootDictEditPage" />
+<div class="bjui-pageContent">
+  <form action="r/d/save" class="pageForm" data-toggle="validate" data-callback="hf_dialogCallback_dict" data-dialog-id="addDialog">
+    <input type="hidden" name="sId" th:value="${entity.sId}" >
+    <input type="hidden" name="iVersion" th:value="${entity.iVersion}" >
+    <input type="hidden" name="iDictLevel" th:value="${entity.iDictLevel}">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <tr th:if="${entity.parentDTO != null}">
+          <td>
+            <label class="control-label x90">所属字典：</label>
+            <input type="hidden" name="sParentId" th:value="${entity.parentDTO.sId}">
+            <input type="text" data-rule="required" size="20" th:value="${entity.parentDTO.sDictName}" disabled>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">字典名称：</label>
+            <input type="text" name="sDictName" data-rule="required" size="20" th:value="${entity.sDictName}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">字典值：</label>
+            <input type="text" name="sDictValue" data-rule="required" size="20" th:value="${entity.sDictValue}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">字典类型：</label>
+            <!-- <input th:if="${(session.currentUser.sId != 'admin') && (entity.iDictType == 1)}" type="hidden" name="iDictType" data-rule="required" size="20" value="1">
+            <input th:if="${(session.currentUser.sId != 'admin') && (entity.iDictType == 1)}" type="text"  data-rule="required" size="20" value="系统字典" readonly> -->
+            <!-- <select th:if="${(session.currentUser.sId == 'admin') || (entity.iDictType == 2)}" data-toggle="selectpicker" data-width="200" name="iDictType" > -->
+            <select th:disabled="${(session.currentUser.sId != 'admin') && (entity.iDictType == 1)}" data-toggle="selectpicker" data-width="200" name="iDictType" >
+              <!-- <option value="2" th:selected="${entity.iDictType == 2}">用户字典</option>
+              <option value="1" th:selected="${entity.iDictType == 1}">系统字典</option> -->
+              <option th:each="pv:${byPValues}" th:selected="${#strings.toString(entity.iDictType) == pv.sDictValue}" th:value="${pv.sDictValue}" th:text="${pv.sDictName}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="control-label x90">排序：</label>
+            <input type="text" name="iOrder" data-rule="required" size="20" th:value="${entity.iOrder}">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="bjui-pageFooter">
+  <ul>
+    <li><button type="button" class="btn-close">关闭</button></li>
+    <li><button type="submit" class="btn-default HF_SUBMIT">保存</button></li>
+  </ul>
+</div>
